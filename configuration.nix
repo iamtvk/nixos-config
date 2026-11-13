@@ -122,13 +122,12 @@
 
 system.autoUpgrade = {
   enable = true;
-  # Point directly to your local Git repository and hostname
-  flake = "/home/childe/nixos-config#stacia"; 
-  flags = [
-    "--update-input" 
-    "nixpkgs"
-    "-L" # Print build logs
-  ];
+  # Fetch from GitHub — works for root's anonymous fetch, avoids the
+  # local-repo ownership error that broke upgrades since July.
+  flake = "github:iamtvk/nixos-config#stacia";
+  # --update-input refreshes the nixpkgs lock on each run
+  # (deprecated alias, but required to keep the lock moving).
+  flags = [ "--update-input" "nixpkgs" "-L" ];
   dates = "19:00";
   randomizedDelaySec = "45min";
   allowReboot = false;
