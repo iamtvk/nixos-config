@@ -401,7 +401,19 @@ environment.sessionVariables = {
 
 
   # Enable the OpenSSH daemon.
-  # services.openssh.enable = true;
+  services.openssh = {
+    enable = true;
+    openFirewall = true; # opens port 22
+    settings = {
+      PermitRootLogin = "no";
+      AllowUsers = [ "childe" ];
+      # Key-only login.
+      PasswordAuthentication = false;
+      KbdInteractiveAuthentication = false;
+    };
+  };
+
+  # Allowed client keys live in ~/.ssh/authorized_keys (not in this public repo).
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
